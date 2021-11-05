@@ -457,7 +457,7 @@ public class scheduleApp extends javax.swing.JFrame {
         redB.setForeground(java.awt.Color.red);
         redB.setText("R");
 
-        jButton2.setText("Save");
+        jButton2.setText("Refresh");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -1332,6 +1332,11 @@ public class scheduleApp extends javax.swing.JFrame {
     private Color colorBlend(Color a, Color b) {
         // Blends two colors from intersecting canvases
         
+        /* TODO:
+        REPLACE THIS SHIT WITH SWITCH STATEMENTS
+        like really, why did I think this was a good idea
+        */
+        
         if (a.toString().equals(Color.YELLOW.toString()) && b.toString().equals(Color.RED.toString())) return Color.ORANGE;
         if (a.toString().equals(Color.BLUE.toString()) && b.toString().equals(Color.RED.toString())) return Color.MAGENTA.darker();
         if (a.toString().equals(Color.BLUE.toString()) && b.toString().equals(Color.YELLOW.toString())) return Color.GREEN.darker();
@@ -1821,8 +1826,8 @@ public class scheduleApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel10FocusGained
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // Saves events
-        writeToFile();
+        // Refresh view
+        refreshcal();
     }//GEN-LAST:event_jButton2MouseClicked
   
     /**
