@@ -1347,7 +1347,7 @@ public class scheduleApp extends javax.swing.JFrame {
         
         System.out.println("Err: Color blend error");
         System.out.println(a.toString() + " + " + b.toString());
-        return Color.YELLOW;
+        return Color.BLACK;
     }
     
     private void generateOverlaps(int day) {
