@@ -1,0 +1,30 @@
+0
+weekly
+9/12/2021
+9 0 am
+5 0 pm
+test line 1
+test line (number two)
+2 4 5
+blue
+j293842349n22349n4
+0
+monthly
+9/12/2021
+3 0 pm
+8 0 pm
+monthly test
+empty
+12 13 18
+red
+80234283424803n84
+0
+weekly
+10/31/2021
+3 0 pm
+8 0 pm
+School stuff
+Study hall, etc.
+2 3
+yellow
+mfw30r23r23p2
