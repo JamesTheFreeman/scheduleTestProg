@@ -12,6 +12,9 @@ import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.*;
+import java.time.LocalTime;
+// Time
+import java.time.format.*;
 
 /**
  * @author james
@@ -26,6 +29,9 @@ public class scheduleApp extends javax.swing.JFrame {
     
     private final String def1 = "Enter your event here...";
     private final String def2 = "Event line two (optional)...";
+    
+    JLabel timeBar = new JLabel();
+    JLabel txt = new JLabel();
 
     /**
      * Creates new form scheduleApp
@@ -708,73 +714,98 @@ public class scheduleApp extends javax.swing.JFrame {
         eventArray = readFromFile();
         
         killComponents();
+        updateCalendar(selectedDate);
         parseEvents();
     }
     
+    // Generates a bar to keep track of current position within the week
     private void markToday(int dayOfWeek)
-    {
+    {   
+        txt.setVisible(false);
         
-        // TODO
-        // ====
-        // Code for marking the current time on the present day
+        int barHeight = 5;
+        Color cl = Color.BLACK;
+        LocalTime nw = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter formatter2= DateTimeFormatter.ofPattern("hh:mm a");
+        String timePrint = nw.format(formatter2);
+        String time = nw.format(formatter);
         
-        /* Reference code from generate function:
+        String[] splt = time.split(":");
+        int h = Integer.parseInt(splt[0]);
+        int m = Integer.parseInt(splt[1]);
         
-        ...
+        timePrint = Integer.parseInt(timePrint.split(":")[0]) + ":" + timePrint.split(":")[1];
         
-        // Set up military time (sort of redundant code, but whatever)
-        if (!am1 && h1 != 12) stMil = (float) h1 + ( (float) m1 / 100f * 1f) + 12f;
-        else if (am1 && h1 == 12) stMil = 0;
-        else stMil = (float) h1 + ( (float) m1 / 100f * 1f);
-        //---//
-        if (!am2 && h2 != 12) etMil = (float) h2 + ( (float) m2 / 100f * 1f) + 12f;
-        else if (am2 && h2 == 12) etMil = 0;
-        else etMil = (float) h2 + ( (float) m2 / 100f * 1f);
-        
-        // Generic code for generating height/position
+        float mil = (float)h + ((float)m / 60f);
         int backHeight = sunBack.getHeight(); // Generic height
-        float height = ((float)backHeight / 23.55f)*(etMil - stMil);
-        float distance = ((((float) backHeight / 23.55f) * stMil));
-        // 23.55f is the magic number for displaying correctly, apparently
-        
-        ...
-        
-        switch (parentDay)
-        {
-            case 1:
-                // System.out.println("New event for sunday");
-                Canvas eventSun = new Canvas();
-                eventSun.setVisible(false);
-                eventSun.setSize(new Dimension(sunBack.getBounds().width, (int) height));
-                eventSun.setLocation(0, (int) distance);
-                eventSun.setBackground(c);
-                eventSun.addMouseListener(new EvMouseListener(parentDay, h1, m1, h2, m2, am1, am2, r, e, c)); // Listener
-                sunBack.add(eventSun);
-                generateOverlaps(parentDay);
-                eventSun.setVisible(true);
-                break;
-        
-        ...
-        
-        */
+        float pos = ((((float) backHeight / 23.55f) * mil));
         
         switch(dayOfWeek)
         {
             case 1:
+                timeBar.setVisible(false);
+                timeBar.setSize(new Dimension(sunBack.getBounds().width, (int) barHeight));
+                timeBar.setLocation(sunBack.getLocation().x, sunBack.getLocation().y + (int)pos);
+                this.add(timeBar, 20);
                 break;
-            case 2:
+            case 2:      
+                timeBar.setVisible(false);
+                timeBar.setSize(new Dimension(monBack.getBounds().width, (int) barHeight));
+                timeBar.setLocation(monBack.getLocation().x, monBack.getLocation().y + (int)pos);
+                this.add(timeBar, 20);
                 break;
             case 3:
+                timeBar.setVisible(false);
+                timeBar.setSize(new Dimension(tueBack.getBounds().width, (int) barHeight));
+                timeBar.setLocation(tueBack.getLocation().x, tueBack.getLocation().y + (int)pos);
+                this.add(timeBar, 20);
                 break;
             case 4:
+                timeBar.setVisible(false);
+                timeBar.setSize(new Dimension(wedBack.getBounds().width, (int) barHeight));
+                timeBar.setLocation(wedBack.getLocation().x, wedBack.getLocation().y + (int)pos);
+                this.add(timeBar, 20);
                 break;
             case 5:
+                timeBar.setVisible(false);
+                timeBar.setSize(new Dimension(thurBack.getBounds().width, (int) barHeight));
+                timeBar.setLocation(thurBack.getLocation().x, thurBack.getLocation().y + (int)pos);
+                this.add(timeBar, 20);
                 break;
             case 6:
+                timeBar.setVisible(false);
+                timeBar.setSize(new Dimension(friBack.getBounds().width, (int) barHeight));
+                timeBar.setLocation(friBack.getLocation().x, friBack.getLocation().y + (int)pos);
+                this.add(timeBar, 20);
                 break;
             case 7:
+                timeBar.setVisible(false);
+                timeBar.setSize(new Dimension(satBack.getBounds().width, (int) barHeight));
+                timeBar.setLocation(satBack.getLocation().x, satBack.getLocation().y + (int)pos);
+                this.add(timeBar, 20);
                 break;
         }
+        // Canvas mask = new Canvas();
+        // mask.setVisible(false);
+        
+        // mask (for color)
+        // mask.setSize(timeBar.getSize());
+        // mask.setBackground(cl);
+        // timeBar.add(mask);    
+        
+        // txt
+        txt.setText(timePrint);
+        txt.setForeground(Color.WHITE);
+        txt.setOpaque(true);
+        txt.setBackground(cl);
+        txt.setBounds(timeBar.getBounds().x, timeBar.getBounds().y - 10, timeBar.getBounds().width, 10);
+        this.add(txt, 21);
+        
+        // Set components visible
+        // mask.setVisible(true);
+        txt.setVisible(true);
+        // timeBar.setVisible(true);
     }
     
     // Generates values for week based on given date
@@ -862,9 +893,8 @@ public class scheduleApp extends javax.swing.JFrame {
         if (today.getTime() == selectedDate.getTime()) return;
         
         selectedDate = today;
-        updateCalendar(today);
-        
         killComponents();
+        updateCalendar(today);
         parseEvents();
     }//GEN-LAST:event_homeButtMouseClicked
 
@@ -878,9 +908,8 @@ public class scheduleApp extends javax.swing.JFrame {
         cal.add(Calendar.DAY_OF_MONTH, 7);
         
         selectedDate = cal.getTime();
-        updateCalendar(selectedDate);
-        
         killComponents();
+        updateCalendar(selectedDate);
         parseEvents();
     }//GEN-LAST:event_rButtMouseClicked
 
@@ -898,9 +927,8 @@ public class scheduleApp extends javax.swing.JFrame {
         cal.add(Calendar.DAY_OF_MONTH, -7);
         
         selectedDate = cal.getTime();
-        updateCalendar(selectedDate);
-        
         killComponents();
+        updateCalendar(selectedDate);
         parseEvents();
     }//GEN-LAST:event_lButtMouseClicked
 
@@ -1069,7 +1097,7 @@ public class scheduleApp extends javax.swing.JFrame {
                                 }
                             }
                             // Checks if event has passed
-                            else if (isBefore(e.getsDate(), checkDates[0]))
+                            else if (isBefore(e.getsDate(), checkDates[0]) && selectedDate == today)
                             {
                                 e.kill = true;
                             }
@@ -1327,6 +1355,8 @@ public class scheduleApp extends javax.swing.JFrame {
         thurBack.removeAll();
         friBack.removeAll();
         satBack.removeAll();
+
+        this.remove(timeBar);
     }
     
     private Color colorBlend(Color a, Color b) {
@@ -1388,7 +1418,7 @@ public class scheduleApp extends javax.swing.JFrame {
         // Oops
         System.out.println("Err: Color blend issue");
         System.out.println(a.toString() + " + " + b.toString());
-        return Color.BLACK;
+        return Color.WHITE;
     }
     
     private void generateOverlaps(int day) {
@@ -1612,6 +1642,11 @@ public class scheduleApp extends javax.swing.JFrame {
         String ev1 = eventField1.getText();
         String ev2 = eventField2.getText();
         
+        if (ev1.equals(def1))
+        {
+            System.out.println("Err: Must at least use event line 1");
+            return;
+        }
         if (ev2.equals(def2)) ev2 = "empty";
         
         // Start time
@@ -1766,13 +1801,13 @@ public class scheduleApp extends javax.swing.JFrame {
         }
         
         // Check for possible span (converts to military time)
-        if (!am1 && st1 != 12) sVal = (float) st1 + ( (float) st2 / 100f * 1f) + 12f;
+        if (!am1 && st1 != 12) sVal = (float) st1 + ( (float) st2 / 60f * 1f) + 12f;
         else if (am1 && st1 == 12) sVal = 0;
-        else sVal = (float) st1 + ( (float) st2 / 100f * 1f);
+        else sVal = (float) st1 + ( (float) st2 / 60f * 1f);
         //---//
-        if (!am2 && et1 != 12) eVal = (float) et1 + ( (float) et2 / 100f * 1f) + 12f;
+        if (!am2 && et1 != 12) eVal = (float) et1 + ( (float) et2 / 60f * 1f) + 12f;
         else if (am2 && et1 == 12) eVal = 0;
-        else eVal = (float) et1 + ( (float) et2 / 100f * 1f);
+        else eVal = (float) et1 + ( (float) et2 / 60f * 1f);
         //---//
         if ((eVal - sVal) <= 0) 
         {
