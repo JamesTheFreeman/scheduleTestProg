@@ -1357,6 +1357,7 @@ public class scheduleApp extends javax.swing.JFrame {
         satBack.removeAll();
 
         this.remove(timeBar);
+        this.remove(txt);
     }
     
     private Color colorBlend(Color a, Color b) {
