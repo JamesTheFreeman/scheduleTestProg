@@ -1332,20 +1332,61 @@ public class scheduleApp extends javax.swing.JFrame {
     private Color colorBlend(Color a, Color b) {
         // Blends two colors from intersecting canvases
         
-        /* TODO:
-        REPLACE THIS SHIT WITH SWITCH STATEMENTS
-        like really, why did I think this was a good idea
-        */
+        String colA = a.toString();
+        String colB = b.toString();
         
-        if (a.toString().equals(Color.YELLOW.toString()) && b.toString().equals(Color.RED.toString())) return Color.ORANGE;
-        if (a.toString().equals(Color.BLUE.toString()) && b.toString().equals(Color.RED.toString())) return Color.MAGENTA.darker();
-        if (a.toString().equals(Color.BLUE.toString()) && b.toString().equals(Color.YELLOW.toString())) return Color.GREEN.darker();
-        
-        if (b.toString().equals(Color.YELLOW.toString()) && a.toString().equals(Color.RED.toString())) return Color.ORANGE;
-        if (b.toString().equals(Color.BLUE.toString()) && a.toString().equals(Color.RED.toString())) return Color.MAGENTA.darker();
-        if (b.toString().equals(Color.BLUE.toString()) && a.toString().equals(Color.YELLOW.toString())) return Color.GREEN.darker();
-        
-        System.out.println("Err: Color blend error");
+        switch(colA)
+        {
+            // Yellow
+            case "java.awt.Color[r=255,g=255,b=0]":
+                switch(colB)
+                {
+                    // + yellow
+                    case "java.awt.Color[r=255,g=255,b=0]":
+                        return Color.YELLOW.darker();
+                    // + blue
+                    case "java.awt.Color[r=0,g=0,b=255]":
+                        return Color.GREEN.darker();
+                    // + red
+                    case "java.awt.Color[r=255,g=0,b=0]":
+                        return Color.ORANGE;       
+                }
+                break;
+                
+            // Blue
+            case "java.awt.Color[r=0,g=0,b=255]":
+                switch(colB)
+                {
+                    // + yellow
+                    case "java.awt.Color[r=255,g=255,b=0]":
+                        return Color.GREEN.darker();
+                    // + blue
+                    case "java.awt.Color[r=0,g=0,b=255]":
+                        return Color.BLUE.darker();
+                    // + red
+                    case "java.awt.Color[r=255,g=0,b=0]":
+                        return Color.MAGENTA.darker();  
+                }
+                break;
+                
+            // Red
+            case "java.awt.Color[r=255,g=0,b=0]":
+                switch(colB)
+                {
+                    // + yellow
+                    case "java.awt.Color[r=255,g=255,b=0]":
+                        return Color.ORANGE;
+                    // + blue
+                    case "java.awt.Color[r=0,g=0,b=255]":
+                        return Color.MAGENTA.darker();
+                    // + red
+                    case "java.awt.Color[r=255,g=0,b=0]":
+                        return Color.RED.darker();  
+                }
+                break;
+        }
+        // Oops
+        System.out.println("Err: Color blend issue");
         System.out.println(a.toString() + " + " + b.toString());
         return Color.BLACK;
     }
