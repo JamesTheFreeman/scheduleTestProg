@@ -31,7 +31,7 @@ public class scheduleApp extends javax.swing.JFrame {
     private final String def2 = "Event line two (optional)...";
     
     JLabel timeBar = new JLabel();
-    JLabel txt = new JLabel();
+    JLabel txtLab = new JLabel();
 
     /**
      * Creates new form scheduleApp
@@ -721,7 +721,7 @@ public class scheduleApp extends javax.swing.JFrame {
     // Generates a bar to keep track of current position within the week
     private void markToday(int dayOfWeek)
     {   
-        txt.setVisible(false);
+        txtLab.setVisible(false);
         
         int barHeight = 5;
         Color cl = Color.BLACK;
@@ -795,16 +795,16 @@ public class scheduleApp extends javax.swing.JFrame {
         // timeBar.add(mask);    
         
         // txt
-        txt.setText(timePrint);
-        txt.setForeground(Color.WHITE);
-        txt.setOpaque(true);
-        txt.setBackground(cl);
-        txt.setBounds(timeBar.getBounds().x, timeBar.getBounds().y - 10, timeBar.getBounds().width, 10);
-        this.add(txt, 21);
+        txtLab.setText(timePrint);
+        txtLab.setForeground(Color.WHITE);
+        txtLab.setOpaque(true);
+        txtLab.setBackground(cl);
+        txtLab.setBounds(timeBar.getBounds().x, timeBar.getBounds().y - 10, timeBar.getBounds().width, 10);
+        this.add(txtLab, 20);
         
         // Set components visible
         // mask.setVisible(true);
-        txt.setVisible(true);
+        txtLab.setVisible(true);
         // timeBar.setVisible(true);
     }
     
@@ -1356,8 +1356,9 @@ public class scheduleApp extends javax.swing.JFrame {
         friBack.removeAll();
         satBack.removeAll();
 
-        this.remove(timeBar);
-        this.remove(txt);
+        //this.remove(timeBar);
+        //this.remove(txtLab);
+        txtLab.setVisible(false);
     }
     
     private Color colorBlend(Color a, Color b) {
