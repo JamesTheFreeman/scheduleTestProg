@@ -1461,18 +1461,18 @@ public class scheduleApp extends javax.swing.JFrame {
         
         int compCount = cnv.getComponentCount(); // Non-moving number in case components are added
         for (cc = 0; cc < compCount; cc++)
-        {
-            // System.out.println("Outer-loop");
+        { // FIRST CHECK COMPONENT
+
             for (cc2 = cc + 1; cc2 < compCount; cc2++)
-            {         
-                // System.out.println("Inner-loop");
+            { // SECOND CHECK COMPONENT
+
                 if (cc2 >= compCount) return;
                 
                 // Compares each rectangle to ever other rectangle for intersections (excludes overlap rectangles)
                 if (cnv.getComponent(cc).getBounds().intersects(cnv.getComponent(cc2).getBounds()) 
                         && !cnv.getComponent(cc2).getName().equals("overlap")
                         && !cnv.getComponent(cc).getName().equals("overlap"))
-                {
+                { // OVERLAP FOUND
                     Rectangle inter = cnv.getComponent(cc).getBounds().intersection(cnv.getComponent(cc2).getBounds());
                     Canvas ovr = new Canvas();
                     ovr.setVisible(false);
@@ -1483,10 +1483,15 @@ public class scheduleApp extends javax.swing.JFrame {
                     cnv.add(ovr, 0);
                     cnv.revalidate(); // Somehow works holy shit
                     ovr.setVisible(true); // Fixes flashing issue
+                    
+                    // TODO:
+                    // Method for checking overlaps 
+                    // (satBack.getComponents[], getBounds().something about overlap)
+                    //
+                    // Needs to work universally with loading function
                 }
             }
         }
-        // System.out.println("Loops exited");
     }
     
     private void generateEvent(int parentDay, int h1, int m1, int h2, int m2,
@@ -1508,13 +1513,13 @@ public class scheduleApp extends javax.swing.JFrame {
         String uuID     = uuid;     // Unique identifier for non-static use
         
         // Set up military time (sort of redundant code, but whatever)
-        if (!am1 && h1 != 12) stMil = (float) h1 + ( (float) m1 / 100f * 1f) + 12f;
+        if (!am1 && h1 != 12) stMil = (float) h1 + ( (float) m1 / 60f * 1f) + 12f;
         else if (am1 && h1 == 12) stMil = 0;
-        else stMil = (float) h1 + ( (float) m1 / 100f * 1f);
+        else stMil = (float) h1 + ( (float) m1 / 60f * 1f);
         //---//
-        if (!am2 && h2 != 12) etMil = (float) h2 + ( (float) m2 / 100f * 1f) + 12f;
+        if (!am2 && h2 != 12) etMil = (float) h2 + ( (float) m2 / 60f * 1f) + 12f;
         else if (am2 && h2 == 12) etMil = 0;
-        else etMil = (float) h2 + ( (float) m2 / 100f * 1f);
+        else etMil = (float) h2 + ( (float) m2 / 60f * 1f);
         
         // Generic code for generating height/position
         int backHeight = sunBack.getHeight(); // Generic height
@@ -1617,12 +1622,6 @@ public class scheduleApp extends javax.swing.JFrame {
                 eventSat.setVisible(true);
                 break;
         }
-        
-        // TODO:
-        // Method for checking overlaps 
-        // (satBack.getComponents[], getBounds().something about overlap)
-        //
-        // Needs to work universally with loading function
     }
     
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked

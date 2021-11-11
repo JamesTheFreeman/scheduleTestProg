@@ -41,7 +41,6 @@ public class EvMouseListener implements MouseListener
         clr = c;                        // Color
         uid = uuid;                     // UUID
         
-        
         blck = new BlockInfo();         // Info block for event
         blck.setVisible(false);
         
