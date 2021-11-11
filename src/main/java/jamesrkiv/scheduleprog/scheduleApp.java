@@ -1895,6 +1895,7 @@ public class scheduleApp extends javax.swing.JFrame {
         
         // New method for update
         killComponents();
+        updateCalendar(selectedDate);
         parseEvents();
     }//GEN-LAST:event_jButton1MouseClicked
 
